@@ -713,7 +713,6 @@ static uint32_t rpmb_data_req(int fd, struct rpmb_data_frame *req_frm,
 		__attribute__((fallthrough));
 #endif
 
-		/* Fall through */
 	case RPMB_MSG_TYPE_REQ_AUTH_DATA_READ:
 		mioc->num_of_cmds = 2;
 
