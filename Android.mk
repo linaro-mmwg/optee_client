@@ -3,12 +3,17 @@
 ################################################################################
 LOCAL_PATH := $(call my-dir)
 
-# set CFG_TEE_CLIENT_LOAD_PATH before include config.mk
-CFG_TEE_CLIENT_LOAD_PATH ?= /vendor/lib
+MAJOR_VERSION := $(shell echo $(PLATFORM_VERSION) | cut -d "." -f1)
+ANDROID_VERSION_GE_O := $(shell if [ $(MAJOR_VERSION) -ge 8 ];then echo "true";fi)
 
-# set CFG_TEE_FS_PARENT_PATH before include config.mk
-TEEC_TEST_LOAD_PATH ?= /data/vendor/tee
-CFG_TEE_FS_PARENT_PATH ?= /data/vendor/tee
+# set CFG_TEE_CLIENT_LOAD_PATH before include config.mk
+ifeq ($(ANDROID_VERSION_GE_O), true)
+CFG_TEE_CLIENT_LOAD_PATH ?= /vendor/lib
+CFG_TEE_FS_PARENT_PATH ?= /data/vendor
+else
+CFG_TEE_CLIENT_LOAD_PATH ?= /system/lib
+CFG_TEE_FS_PARENT_PATH ?= /data
+endif
 
 ################################################################################
 # Include optee-client common config and flags                                 #
@@ -45,7 +50,11 @@ LOCAL_PRELINK_MODULE := false
 LOCAL_MODULE := libteec
 
 LOCAL_MODULE_TAGS := optional
+
+ifeq ($(ANDROID_VERSION_GE_O), true)
 LOCAL_VENDOR_MODULE := true
+endif
+LOCAL_PROPRIETARY_MODULE := true
 
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/public
 
