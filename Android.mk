@@ -15,10 +15,9 @@ CFG_TEE_CLIENT_LOAD_PATH ?= /system/lib
 CFG_TEE_FS_PARENT_PATH ?= /data
 endif
 
-# set CFG_TEE_DATA_PATH before include config.mk
-CFG_TEE_DATA_PATH ?= /data/vendor/tee
+# set CFG_TEE_FS_PARENT_PATH before include config.mk
 TEEC_TEST_LOAD_PATH ?= /data/vendor/tee
-CFG_TEE_FS_PARENT_PATH ?= /data/vendor
+CFG_TEE_FS_PARENT_PATH ?= /data/vendor/tee
 
 ################################################################################
 # Include optee-client common config and flags                                 #
