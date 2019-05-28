@@ -9,15 +9,13 @@ ANDROID_VERSION_GE_O := $(shell if [ $(MAJOR_VERSION) -ge 8 ];then echo "true";f
 # set CFG_TEE_CLIENT_LOAD_PATH before include config.mk
 ifeq ($(ANDROID_VERSION_GE_O), true)
 CFG_TEE_CLIENT_LOAD_PATH ?= /vendor/lib
-CFG_TEE_FS_PARENT_PATH ?= /data/vendor
-else
-CFG_TEE_CLIENT_LOAD_PATH ?= /system/lib
-CFG_TEE_FS_PARENT_PATH ?= /data
-endif
-
-# set CFG_TEE_FS_PARENT_PATH before include config.mk
 TEEC_TEST_LOAD_PATH ?= /data/vendor/tee
 CFG_TEE_FS_PARENT_PATH ?= /data/vendor/tee
+else
+CFG_TEE_CLIENT_LOAD_PATH ?= /system/lib
+TEEC_TEST_LOAD_PATH ?= /data/tee
+CFG_TEE_FS_PARENT_PATH ?= /data/tee
+endif
 
 ################################################################################
 # Include optee-client common config and flags                                 #
