@@ -194,7 +194,8 @@ static TEEC_Result teec_pre_process_tmpref(TEEC_Context *ctx,
 	if (res != TEEC_SUCCESS)
 		return res;
 
-	memcpy(shm->buffer, tmpref->buffer, tmpref->size);
+	if (shm->buffer && tmpref->buffer)	
+		memcpy(shm->buffer, tmpref->buffer, tmpref->size);
 	param->u.memref.size = tmpref->size;
 	param->u.memref.shm_id = shm->id;
 	return TEEC_SUCCESS;
